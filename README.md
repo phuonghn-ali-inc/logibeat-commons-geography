@@ -8,7 +8,7 @@ Wiki reference: [Point in polygon](http://en.wikipedia.org/wiki/Point_in_polygon
 ## Algorithm
 The number of intersections for a ray passing from the exterior of the polygon to any point; if odd, it shows that the point lies inside the polygon. If it is even, the point lies outside the polygon.
 
-<img src="/assets/simple_polygon.png"/>
+<img src="src/site/assets/simple_polygon.png"/>
 
 ## Usage
 
@@ -48,7 +48,7 @@ Polygon polygon = Polygon.Builder()
         .build();
 ```
 
-<img src="/assets/polygon_with_holes.png"/>
+<img src="src/site/assets/polygon_with_holes.png"/>
 
 ### Check if the point inside
 
@@ -76,5 +76,3 @@ Two main tests are attached (not in junit format). Both tests cover polygons wit
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/sromku/polygon-contains-point/trend.png)](https://bitdeli.com/free "Bitdeli Badge")

@@ -1,9 +1,6 @@
-package com.sromku.test;
+package com.sromku.polygon;
 
-import com.sromku.polygon.Point;
-import com.sromku.polygon.Polygon;
-
-public class Tests
+public class PolygonTest
 {
 	public static void main(String[] args)
 	{
