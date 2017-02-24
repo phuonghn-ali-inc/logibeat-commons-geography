@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.logibeat.commons</groupId>
-    <artifactId>commons-geom</artifactId>
+    <artifactId>commons-geography</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <name>logibeat-commons-geom</name>
+    <name>logibeat-commons-geography</name>
     <url>http://www.logibeat.com</url>
 
     <properties>
