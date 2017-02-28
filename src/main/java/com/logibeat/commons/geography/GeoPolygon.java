@@ -53,5 +53,12 @@ public abstract class GeoPolygon implements GeoShape {
         public String getPolicy() {
             return policy;
         }
+
+        @Override
+        public String toString() {
+            return "{" +
+                    "policy='" + policy + '\'' +
+                    '}';
+        }
     }
 }

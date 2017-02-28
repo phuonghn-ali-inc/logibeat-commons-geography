@@ -9,7 +9,7 @@ import java.util.Arrays;
 public class JdkGeoPolygon extends GeoPolygon {
 
     /**
-     * 几何学上的多边形
+     * using integer instead of double
      */
     protected Polygon geomPolygon000000;
 
