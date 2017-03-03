@@ -1,4 +1,6 @@
-package com.logibeat.commons.geography;
+package com.logibeat.commons.geography.polygon;
+
+import com.logibeat.commons.geography.GeoPoint;
 
 import java.awt.*;
 import java.awt.geom.GeneralPath;
@@ -34,8 +36,8 @@ public class JdkGeneralPathGeoPolygon extends GeoPolygon {
         return new Point2D.Double(geoPoint.getX000000(), geoPoint.getY000000());
     }
 
-    public AlgorithmPolicy getAlgorithmPolicy() {
-        return AlgorithmPolicy.JDK_GENERAL_PATH;
+    public PipAlgorithm getPipAlgorithm() {
+        return PipAlgorithm.JDK_GENERAL_PATH;
     }
 
     public boolean contains(GeoPoint geoPoint) {

@@ -1,4 +1,7 @@
-package com.logibeat.commons.geography;
+package com.logibeat.commons.geography.polygon;
+
+import com.logibeat.commons.geography.GeoPoint;
+import com.logibeat.commons.geography.GeoShape;
 
 import java.awt.*;
 
@@ -24,7 +27,7 @@ public abstract class GeoPolygon implements GeoShape {
         return npoints;
     }
 
-    public abstract AlgorithmPolicy getAlgorithmPolicy();
+    public abstract PipAlgorithm getPipAlgorithm();
 
     public boolean contains(double x, double y) {
         return contains(new GeoPoint(x, y));
@@ -39,25 +42,25 @@ public abstract class GeoPolygon implements GeoShape {
      */
     public abstract Polygon clonePolygon000000();
 
-    public enum AlgorithmPolicy {
+    public enum PipAlgorithm {
         JDK("JDK"),
         JDK_GENERAL_PATH("JDK_GENERAL_PATH"),
         SROMKU("SROMKU");
 
-        private final String policy;
+        private final String algorithm;
 
-        AlgorithmPolicy(String policy) {
-            this.policy = policy;
+        PipAlgorithm(String policy) {
+            this.algorithm = policy;
         }
 
-        public String getPolicy() {
-            return policy;
+        public String getAlgorithm() {
+            return algorithm;
         }
 
         @Override
         public String toString() {
             return "{" +
-                    "policy='" + policy + '\'' +
+                    "algorithm='" + algorithm + '\'' +
                     '}';
         }
     }

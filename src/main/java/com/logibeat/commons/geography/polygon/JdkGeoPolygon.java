@@ -1,4 +1,6 @@
-package com.logibeat.commons.geography;
+package com.logibeat.commons.geography.polygon;
+
+import com.logibeat.commons.geography.GeoPoint;
 
 import java.awt.*;
 import java.util.Arrays;
@@ -25,8 +27,8 @@ public class JdkGeoPolygon extends GeoPolygon {
         geomPolygon000000 = new Polygon(xpoints000000, ypoints000000, npoints);
     }
 
-    public AlgorithmPolicy getAlgorithmPolicy() {
-        return AlgorithmPolicy.JDK;
+    public PipAlgorithm getPipAlgorithm() {
+        return PipAlgorithm.JDK;
     }
 
     public boolean contains(GeoPoint geoPoint) {

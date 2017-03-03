@@ -1,5 +1,6 @@
-package com.logibeat.commons.geography;
+package com.logibeat.commons.geography.polygon;
 
+import com.logibeat.commons.geography.GeoPoint;
 import com.sromku.polygon.Point;
 
 import java.awt.*;
@@ -38,8 +39,8 @@ public class SromkuGeoPolygon extends GeoPolygon {
         sromkuPolygon = builder.build();
     }
 
-    public AlgorithmPolicy getAlgorithmPolicy() {
-        return AlgorithmPolicy.SROMKU;
+    public PipAlgorithm getPipAlgorithm() {
+        return PipAlgorithm.SROMKU;
     }
 
     public boolean contains(GeoPoint geoPoint) {

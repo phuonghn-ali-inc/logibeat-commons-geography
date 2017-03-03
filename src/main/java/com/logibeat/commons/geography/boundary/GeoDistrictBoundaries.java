@@ -1,18 +1,21 @@
-package com.logibeat.commons.geography;
+package com.logibeat.commons.geography.boundary;
 
+import com.logibeat.commons.geography.GeoPoint;
+import com.logibeat.commons.geography.polygon.GeoPolygon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * bounadaries of a district consist of one or more <code>GeoPolygon</code>
  * Created by alex on 24/02/2017.
  */
-public class GeoDistrict {
-    private Logger logger = LoggerFactory.getLogger(GeoDistrict.class);
+public class GeoDistrictBoundaries {
+    private Logger logger = LoggerFactory.getLogger(GeoDistrictBoundaries.class);
     private String adcode;
     private String center;
     private GeoPolygon[] geoPolygons;
 
-    public GeoDistrict(String adcode, String center, GeoPolygon[] geoPolygons) {
+    public GeoDistrictBoundaries(String adcode, String center, GeoPolygon[] geoPolygons) {
         this.adcode = adcode;
         this.center = center;
         this.geoPolygons = geoPolygons;
@@ -39,7 +42,7 @@ public class GeoDistrict {
                 geoPoint.getX(),
                 geoPoint.getY(),
                 b,
-                (t2-t1));
+                (t2 - t1));
         return b;
     }
 
@@ -50,5 +53,14 @@ public class GeoDistrict {
             }
         }
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return "GeoDistrictBoundaries{" +
+                "adcode='" + adcode + '\'' +
+                ", center='" + center + '\'' +
+                ", geoPolygons.length=" + geoPolygons.length +
+                '}';
     }
 }
