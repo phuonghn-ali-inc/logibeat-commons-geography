@@ -5,6 +5,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.logibeat.commons.geography.GeoPoint;
 import com.logibeat.commons.geography.boundary.GeoDistrictBoundaries;
 import com.logibeat.commons.geography.boundary.GeoDistrictBoundariesCollection;
+import com.logibeat.commons.geography.district.GeoDistrict;
+import com.logibeat.commons.geography.district.GeoDistrictCollection;
 import com.logibeat.commons.geography.polygon.GeoPolygon;
 import com.logibeat.commons.geography.polygon.JdkGeneralPathGeoPolygon;
 import com.logibeat.commons.geography.polygon.JdkGeoPolygon;
@@ -27,8 +29,8 @@ import java.util.List;
  * Created by alex on 17/02/2017.
  */
 public class GeoUtils {
+    public static final String GEO_DISTRICT_CHINA_DIST_JSON = "/geo-district-china-dist.json";
     private static final Logger logger = LoggerFactory.getLogger(GeoUtils.class);
-
 
     public static GeoDistrictBoundaries buildGeoDistrictBoundaries(String filename) throws IOException {
         return buildGeoDistrictBoundaries(filename, GeoPolygon.PipAlgorithm.JDK);
@@ -102,4 +104,26 @@ public class GeoUtils {
         geoDistrictBoundariesCollection.setGeoDistrictBoundariesArray(list);
         return geoDistrictBoundariesCollection;
     }
+
+    public static GeoDistrictCollection buildGeoDistrictCollection(String filename) throws IOException {
+        String jsonString;
+        Class clazz = GeoUtils.class;
+        if (StringUtils.isNotEmpty(filename)) {
+            File file = new File(filename);
+            logger.info("build from json file: {}", file.getCanonicalPath());
+            jsonString = FileUtils.readFileToString(file, "utf-8");
+        } else {
+            logger.info("build from resource file: {}", clazz.getResource(GEO_DISTRICT_CHINA_DIST_JSON));
+            jsonString = IOUtils.toString(clazz.getResourceAsStream(GEO_DISTRICT_CHINA_DIST_JSON), "utf-8");
+        }
+        List<GeoDistrict> list = new ArrayList<>();
+        JSONArray jsonArray = JSONObject.parseArray(jsonString);
+        jsonArray.forEach(json -> list.add(((JSONObject) json).toJavaObject(GeoDistrict.class)));
+        return new GeoDistrictCollection(list);
+    }
+
+    public static GeoDistrictCollection buildGeoDistrictCollection() throws IOException {
+        return buildGeoDistrictCollection(null);
+    }
+
 }

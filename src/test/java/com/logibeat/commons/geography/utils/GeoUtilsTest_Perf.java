@@ -2,6 +2,7 @@ package com.logibeat.commons.geography.utils;
 
 import com.logibeat.commons.geography.GeoPoint;
 import com.logibeat.commons.geography.boundary.GeoDistrictBoundariesCollection;
+import com.logibeat.commons.geography.district.GeoDistrictLevel;
 import com.logibeat.commons.geography.polygon.GeoPolygon;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -61,24 +62,24 @@ public class GeoUtilsTest_Perf {
     public void contains_ChinaDisctricts1() throws Exception {
         GeoDistrictBoundariesCollection collection = GeoUtils.buildGeoDistrictBoundariesCollection(
                 "src/test/resources/data/level/boundaries-level-3-json.zip");
-        _task(collection, GeoPolygon.PipAlgorithm.JDK, 3);
+        _task(collection, GeoPolygon.PipAlgorithm.JDK, GeoDistrictLevel.DISTRICT);
     }
 
     //    @Test
     public void contains_ChinaDisctricts2() throws Exception {
         GeoDistrictBoundariesCollection collection = GeoUtils.buildGeoDistrictBoundariesCollection(
                 "src/test/resources/data/level/boundaries-level-3-json.zip", GeoPolygon.PipAlgorithm.JDK_GENERAL_PATH);
-        _task(collection, GeoPolygon.PipAlgorithm.JDK_GENERAL_PATH, 3);
+        _task(collection, GeoPolygon.PipAlgorithm.JDK_GENERAL_PATH, GeoDistrictLevel.DISTRICT);
     }
 
     @Test
     public void contains_ChinaDisctricts3() throws Exception {
         GeoDistrictBoundariesCollection collection = GeoUtils.buildGeoDistrictBoundariesCollection(
                 "src/test/resources/data/level/boundaries-level-3-json.zip", GeoPolygon.PipAlgorithm.SROMKU);
-        _task(collection, GeoPolygon.PipAlgorithm.SROMKU, 3);
+        _task(collection, GeoPolygon.PipAlgorithm.SROMKU, GeoDistrictLevel.DISTRICT);
     }
 
-    private void _task(final GeoDistrictBoundariesCollection collection, final GeoPolygon.PipAlgorithm ap, final int level) throws Exception {
+    private void _task(final GeoDistrictBoundariesCollection collection, final GeoPolygon.PipAlgorithm ap, final GeoDistrictLevel level) throws Exception {
         ExecutorService pool = Executors.newFixedThreadPool(TASK_SIZE);
         for (int i = 0; i < TASK_SIZE; i++) {
             Callable callable = new Callable<List>() {
@@ -104,7 +105,7 @@ public class GeoUtilsTest_Perf {
         }
     }
 
-    private void _containsGeoDistrictChinaDisctricts(final GeoDistrictBoundariesCollection collection, final int level) {
+    private void _containsGeoDistrictChinaDisctricts(final GeoDistrictBoundariesCollection collection, final GeoDistrictLevel level) {
         assertEqualsAdcode("330127", "330100", level, collection, 118.616411, 29.269244);
         assertEqualsAdcode("330185", "330100", level, collection, 119.104013, 30.314349);
         assertEqualsAdcode("330185", "330100", level, collection, 118.963094, 30.340284);
@@ -119,9 +120,11 @@ public class GeoUtilsTest_Perf {
         assertEqualsAdcode("653121", "653100", level, collection, 75.781975, 39.270635);
     }
 
-    private void assertEqualsAdcode(String adcode3, String adcode2, int level, GeoDistrictBoundariesCollection collection, double x, double y) {
+    private void assertEqualsAdcode(String adcode3, String adcode2, GeoDistrictLevel level, GeoDistrictBoundariesCollection collection, double x, double y) {
 //        Assert.assertEquals(calcAdcode(adcode, level), collection.whichContains( x, y));
-        String adcode = level == 2 ? adcode2 : (level == 3 ? adcode3 : "xxxxxx");
+        String adcode = GeoDistrictLevel.CITY.equals(level)
+                ? adcode2
+                : (GeoDistrictLevel.DISTRICT.equals(level) ? adcode3 : "xxxxxx");
         Assert.assertEquals(adcode, collection.whichContains(x, y));
     }
 
@@ -146,7 +149,7 @@ public class GeoUtilsTest_Perf {
     public void contains_ChinaCities1() throws Exception {
         GeoDistrictBoundariesCollection collection = GeoUtils.buildGeoDistrictBoundariesCollection(
                 "src/test/resources/data/level/boundaries-level-2-json.zip");
-        _task(collection, GeoPolygon.PipAlgorithm.JDK, 2);
+        _task(collection, GeoPolygon.PipAlgorithm.JDK, GeoDistrictLevel.CITY);
     }
 
 
@@ -154,14 +157,14 @@ public class GeoUtilsTest_Perf {
     public void contains_ChinaCities2() throws Exception {
         GeoDistrictBoundariesCollection collection = GeoUtils.buildGeoDistrictBoundariesCollection(
                 "src/test/resources/data/level/boundaries-level-2-json.zip", GeoPolygon.PipAlgorithm.JDK_GENERAL_PATH);
-        _task(collection, GeoPolygon.PipAlgorithm.JDK_GENERAL_PATH, 2);
+        _task(collection, GeoPolygon.PipAlgorithm.JDK_GENERAL_PATH, GeoDistrictLevel.CITY);
     }
 
     @Test
     public void contains_ChinaCities3() throws Exception {
         GeoDistrictBoundariesCollection collection = GeoUtils.buildGeoDistrictBoundariesCollection(
                 "src/test/resources/data/level/boundaries-level-2-json.zip", GeoPolygon.PipAlgorithm.SROMKU);
-        _task(collection, GeoPolygon.PipAlgorithm.SROMKU, 2);
+        _task(collection, GeoPolygon.PipAlgorithm.SROMKU, GeoDistrictLevel.CITY);
     }
 
 }

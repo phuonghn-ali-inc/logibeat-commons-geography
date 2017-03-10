@@ -8,3 +8,5 @@ Many thanks to Roman Kushnarenko who is the author of [romku/polygon-contains-po
 (https://github.com/logibeat/polygon-contains-point)
 
 When the enclosure is a simple polygon, we find the <code>JDK Algorithm Policy</code> is the best one so far.
+
+<img src="src/site/assets/VisualVM.screenshot.png"/>

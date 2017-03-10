@@ -8,7 +8,7 @@ import java.awt.geom.Point2D;
  * <code>x</code>: -180 ~ 180
  * <code>y</code>: -90 ~ 90
  * in <code>%.6f</code> format
- * </p>
+ * </pre>
  * Created by alex on 17/02/2017.
  *
  * @since 2.0

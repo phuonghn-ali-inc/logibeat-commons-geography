@@ -5,11 +5,13 @@ import com.logibeat.commons.geography.polygon.GeoPolygon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Serializable;
+
 /**
  * bounadaries of a district consist of one or more <code>GeoPolygon</code>
  * Created by alex on 24/02/2017.
  */
-public class GeoDistrictBoundaries {
+public class GeoDistrictBoundaries  implements Serializable {
     private Logger logger = LoggerFactory.getLogger(GeoDistrictBoundaries.class);
     private String adcode;
     private String center;
