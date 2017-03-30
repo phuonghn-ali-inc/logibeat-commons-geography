@@ -1,9 +1,7 @@
 package com.logibeat.commons.geography.boundary;
 
-import com.logibeat.commons.geography.boundary.GeoDistrictBoundariesCollection;
 import com.logibeat.commons.geography.polygon.GeoPolygon;
 import com.logibeat.commons.geography.utils.GeoUtils;
-import org.apache.commons.lang3.RandomUtils;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

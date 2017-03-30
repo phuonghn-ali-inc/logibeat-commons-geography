@@ -1,5 +1,7 @@
 package com.logibeat.commons.geography;
 
+import com.logibeat.commons.geography.polygon.GeoBounds;
+
 /**
  * Created by alex on 17/02/2017.
  *
@@ -8,5 +10,7 @@ package com.logibeat.commons.geography;
 public interface GeoShape {
 
     boolean contains(double x, double y);
+
+    GeoBounds getGeoBounds();
 
 }

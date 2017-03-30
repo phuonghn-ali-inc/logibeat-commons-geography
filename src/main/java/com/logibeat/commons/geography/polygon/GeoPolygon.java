@@ -15,13 +15,25 @@ import java.awt.*;
  */
 public abstract class GeoPolygon implements GeoShape {
 
-
     protected int npoints;
+
+    protected GeoBounds geoBounds;
 
     public GeoPolygon(GeoPoint[] geoPoints) {
         npoints = geoPoints.length;
+        geoBounds = new GeoBounds();
+        geoBounds.setMaxX(geoPoints[0].getX());
+        geoBounds.setMinX(geoPoints[0].getX());
+        geoBounds.setMaxX(geoPoints[0].getY());
+        geoBounds.setMinY(geoPoints[0].getY());
+        for (GeoPoint geoPoint :
+                geoPoints) {
+            geoBounds.maxX = Math.max(geoBounds.maxX, geoPoint.getX());
+            geoBounds.minX = Math.min(geoBounds.minX, geoPoint.getX());
+            geoBounds.maxY = Math.max(geoBounds.maxY, geoPoint.getY());
+            geoBounds.minY = Math.min(geoBounds.minY, geoPoint.getY());
+        }
     }
-
 
     public int getNpoints() {
         return npoints;
@@ -29,11 +41,11 @@ public abstract class GeoPolygon implements GeoShape {
 
     public abstract PipAlgorithm getPipAlgorithm();
 
-    public boolean contains(double x, double y) {
-        return contains(new GeoPoint(x, y));
-    }
+    public abstract boolean contains(double x, double y);
 
-    public abstract boolean contains(GeoPoint geoPoint);
+    public GeoBounds getGeoBounds() {
+        return geoBounds;
+    }
 
     /**
      * 多边形(几何学上的,每个点的<code>x</code>,<code>y</code>都是乘以1000000后的整数)

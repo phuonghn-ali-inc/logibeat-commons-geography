@@ -3,14 +3,12 @@ package com.logibeat.commons.geography.utils;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.logibeat.commons.geography.GeoPoint;
+import com.logibeat.commons.geography.GeoShape;
 import com.logibeat.commons.geography.boundary.GeoDistrictBoundaries;
 import com.logibeat.commons.geography.boundary.GeoDistrictBoundariesCollection;
 import com.logibeat.commons.geography.district.GeoDistrict;
 import com.logibeat.commons.geography.district.GeoDistrictCollection;
-import com.logibeat.commons.geography.polygon.GeoPolygon;
-import com.logibeat.commons.geography.polygon.JdkGeneralPathGeoPolygon;
-import com.logibeat.commons.geography.polygon.JdkGeoPolygon;
-import com.logibeat.commons.geography.polygon.SromkuGeoPolygon;
+import com.logibeat.commons.geography.polygon.*;
 import org.apache.commons.compress.archivers.ArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream;
 import org.apache.commons.io.FileUtils;
@@ -24,13 +22,15 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by alex on 17/02/2017.
  */
 public class GeoUtils {
-    public static final String GEO_DISTRICT_CHINA_DIST_JSON = "/geo-district-china-dist.json";
+    public static final String GEO_DISTRICT_CHINA_DIST_JSON = "/district-dist.json";
     private static final Logger logger = LoggerFactory.getLogger(GeoUtils.class);
+    private static GeoDistrictCollection DEFUALT_DISTRICT_COLLECTION = null;
 
     public static GeoDistrictBoundaries buildGeoDistrictBoundaries(String filename) throws IOException {
         return buildGeoDistrictBoundaries(filename, GeoPolygon.PipAlgorithm.JDK);
@@ -76,6 +76,10 @@ public class GeoUtils {
     }
 
     public static GeoDistrictBoundariesCollection buildGeoDistrictBoundariesCollection(String zipFilename, GeoPolygon.PipAlgorithm pipAlgorithm) throws IOException {
+        return buildGeoDistrictBoundariesCollection(zipFilename, pipAlgorithm, buildGeoDistrictCollection());
+    }
+
+    public static GeoDistrictBoundariesCollection buildGeoDistrictBoundariesCollection(String zipFilename, GeoPolygon.PipAlgorithm pipAlgorithm, GeoDistrictCollection prebuiltTreeForOptimizing) throws IOException {
         File zipFile = new File(zipFilename);
         logger.debug("build from zip file: {}", zipFile.getCanonicalPath());
         ZipArchiveInputStream zais = new ZipArchiveInputStream(new FileInputStream(zipFile));
@@ -102,6 +106,9 @@ public class GeoUtils {
         }
         GeoDistrictBoundariesCollection geoDistrictBoundariesCollection = new GeoDistrictBoundariesCollection();
         geoDistrictBoundariesCollection.setGeoDistrictBoundariesArray(list);
+        if (prebuiltTreeForOptimizing != null) { // set optimized way if ok
+            geoDistrictBoundariesCollection.optimize(prebuiltTreeForOptimizing);
+        }
         return geoDistrictBoundariesCollection;
     }
 
@@ -122,8 +129,26 @@ public class GeoUtils {
         return new GeoDistrictCollection(list);
     }
 
-    public static GeoDistrictCollection buildGeoDistrictCollection() throws IOException {
-        return buildGeoDistrictCollection(null);
+    public static synchronized GeoDistrictCollection buildGeoDistrictCollection() throws IOException {
+        if (DEFUALT_DISTRICT_COLLECTION == null) {
+            DEFUALT_DISTRICT_COLLECTION = buildGeoDistrictCollection(null);
+        }
+        return DEFUALT_DISTRICT_COLLECTION;
     }
 
+    public static GeoBounds unionGeoBouds(GeoShape... shapes) {
+        GeoBounds union = new GeoBounds();
+        for (GeoShape shape :
+                shapes) {
+            if (shape == null) {
+                continue;
+            }
+            GeoBounds geoBounds = shape.getGeoBounds();
+            union.setMaxX(Double.isInfinite(union.getMaxX()) ? geoBounds.getMaxX() : Math.max(union.getMaxX(), geoBounds.getMaxX()));
+            union.setMinX(Double.isInfinite(union.getMinX()) ? geoBounds.getMinX() : Math.min(union.getMinX(), geoBounds.getMinX()));
+            union.setMaxY(Double.isInfinite(union.getMaxY()) ? geoBounds.getMaxY() : Math.max(union.getMaxY(), geoBounds.getMaxY()));
+            union.setMinY(Double.isInfinite(union.getMinY()) ? geoBounds.getMinY() : Math.min(union.getMinY(), geoBounds.getMinY()));
+        }
+        return union;
+    }
 }

@@ -1,7 +1,10 @@
 package com.logibeat.commons.geography.boundary;
 
 import com.logibeat.commons.geography.GeoPoint;
+import com.logibeat.commons.geography.GeoShape;
+import com.logibeat.commons.geography.polygon.GeoBounds;
 import com.logibeat.commons.geography.polygon.GeoPolygon;
+import com.logibeat.commons.geography.utils.GeoUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,16 +14,18 @@ import java.io.Serializable;
  * bounadaries of a district consist of one or more <code>GeoPolygon</code>
  * Created by alex on 24/02/2017.
  */
-public class GeoDistrictBoundaries  implements Serializable {
+public class GeoDistrictBoundaries implements GeoShape, Serializable {
     private Logger logger = LoggerFactory.getLogger(GeoDistrictBoundaries.class);
     private String adcode;
     private String center;
     private GeoPolygon[] geoPolygons;
+    private GeoBounds geoBounds;
 
     public GeoDistrictBoundaries(String adcode, String center, GeoPolygon[] geoPolygons) {
         this.adcode = adcode;
         this.center = center;
         this.geoPolygons = geoPolygons;
+        geoBounds = GeoUtils.unionGeoBouds(geoPolygons);
     }
 
     public String getAdcode() {
@@ -36,25 +41,7 @@ public class GeoDistrictBoundaries  implements Serializable {
     }
 
     public boolean contains(GeoPoint geoPoint) {
-        long t1 = System.currentTimeMillis();
-        boolean b = _contains(geoPoint);
-        long t2 = System.currentTimeMillis();
-        logger.debug("district[{}] contains ({},{}): {}, {}ms elapsed.",
-                adcode,
-                geoPoint.getX(),
-                geoPoint.getY(),
-                b,
-                (t2 - t1));
-        return b;
-    }
-
-    private boolean _contains(GeoPoint geoPoint) {
-        for (int i = 0; i < geoPolygons.length; i++) {
-            if (geoPolygons[i].contains(geoPoint)) {
-                return true;
-            }
-        }
-        return false;
+        return contains(geoPoint.getX(), geoPoint.getY());
     }
 
     @Override
@@ -64,5 +51,26 @@ public class GeoDistrictBoundaries  implements Serializable {
                 ", center='" + center + '\'' +
                 ", geoPolygons.length=" + geoPolygons.length +
                 '}';
+    }
+
+    @Override
+    public boolean contains(double x, double y) {
+        long t1 = System.currentTimeMillis();
+        boolean b = false;
+        for (int i = 0; i < geoPolygons.length; i++) {
+            if (geoPolygons[i].contains(x, y)) {
+                b = true;
+                break;
+            }
+        }
+        long t2 = System.currentTimeMillis();
+        logger.debug("district[{}] contains ({},{}): {}, {}ms elapsed.",
+                adcode, x, y, b, (t2 - t1));
+        return b;
+    }
+
+    @Override
+    public GeoBounds getGeoBounds() {
+        return geoBounds;
     }
 }

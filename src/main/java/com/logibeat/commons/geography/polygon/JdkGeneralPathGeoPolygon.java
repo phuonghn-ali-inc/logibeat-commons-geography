@@ -40,6 +40,11 @@ public class JdkGeneralPathGeoPolygon extends GeoPolygon {
         return PipAlgorithm.JDK_GENERAL_PATH;
     }
 
+    @Override
+    public boolean contains(double x, double y) {
+        return contains(new GeoPoint(x, y));
+    }
+
     public boolean contains(GeoPoint geoPoint) {
         if (!generalPath.getBounds().contains(geoPoint.getX000000(), geoPoint.getY000000())) {
             return false;

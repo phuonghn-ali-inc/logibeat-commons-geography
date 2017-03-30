@@ -4,9 +4,7 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by alex on 09/03/2017.
@@ -62,5 +60,17 @@ public class GeoDistrictCollection {
     public String getMergerShortNameByAdcode(String adcode) {
         GeoDistrict geoDistrict = _byAdcode(adcode, false);
         return (geoDistrict == null) ? null : geoDistrict.getMergerShortName();
+    }
+
+    public Map<String, String> tree() {
+        Map<String, String> map = new HashMap<>();
+        geoDistrictArray.forEach(geoDistrict -> map.put(geoDistrict.getAdcode(), geoDistrict.getParentAdcode()));
+        return Collections.unmodifiableMap(map);
+    }
+
+    public List<String> all() {
+        List<String> list = new ArrayList<>();
+        geoDistrictArray.forEach(geoDistrict -> list.add(geoDistrict.getAdcode()));
+        return Collections.unmodifiableList(list);
     }
 }

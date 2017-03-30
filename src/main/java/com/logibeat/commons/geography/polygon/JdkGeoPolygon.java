@@ -31,6 +31,11 @@ public class JdkGeoPolygon extends GeoPolygon {
         return PipAlgorithm.JDK;
     }
 
+    @Override
+    public boolean contains(double x, double y) {
+        return contains(new GeoPoint(x, y));
+    }
+
     public boolean contains(GeoPoint geoPoint) {
         return geomPolygon000000.contains(geoPoint.getX000000(), geoPoint.getY000000());
     }
