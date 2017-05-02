@@ -69,7 +69,7 @@ public class GeoUtilsTest_Perf {
     @Test
     public void containsLevel3_jdk_2() throws Exception {
         GeoDistrictBoundariesCollection collection = GeoUtils.buildGeoDistrictBoundariesCollection(
-                "src/test/resources/data/level/boundaries-level-3-json.zip", GeoPolygon.PipAlgorithm.JDK, null);
+                "src/test/resources/data/level/boundaries-level-3-json.zip", GeoPolygon.PipAlgorithm.JDK);
         _task(collection, GeoPolygon.PipAlgorithm.JDK, GeoDistrictLevel.DISTRICT);
     }
 
@@ -83,7 +83,7 @@ public class GeoUtilsTest_Perf {
     //    @Test
     public void containsLevel3_gpath_2() throws Exception {
         GeoDistrictBoundariesCollection collection = GeoUtils.buildGeoDistrictBoundariesCollection(
-                "src/test/resources/data/level/boundaries-level-3-json.zip", GeoPolygon.PipAlgorithm.JDK_GENERAL_PATH, null);
+                "src/test/resources/data/level/boundaries-level-3-json.zip", GeoPolygon.PipAlgorithm.JDK_GENERAL_PATH);
         _task(collection, GeoPolygon.PipAlgorithm.JDK_GENERAL_PATH, GeoDistrictLevel.DISTRICT);
     }
 
@@ -125,7 +125,7 @@ public class GeoUtilsTest_Perf {
     @Test
     public void containsLevel3_sromku_2() throws Exception {
         GeoDistrictBoundariesCollection collection = GeoUtils.buildGeoDistrictBoundariesCollection(
-                "src/test/resources/data/level/boundaries-level-3-json.zip", GeoPolygon.PipAlgorithm.SROMKU, null);
+                "src/test/resources/data/level/boundaries-level-3-json.zip", GeoPolygon.PipAlgorithm.SROMKU);
         _task(collection, GeoPolygon.PipAlgorithm.SROMKU, GeoDistrictLevel.DISTRICT);
     }
 
@@ -179,7 +179,7 @@ public class GeoUtilsTest_Perf {
     @Test
     public void containsLevel2_jdk_2() throws Exception {
         GeoDistrictBoundariesCollection collection = GeoUtils.buildGeoDistrictBoundariesCollection(
-                "src/test/resources/data/level/boundaries-level-2-json.zip", GeoPolygon.PipAlgorithm.JDK, null);
+                "src/test/resources/data/level/boundaries-level-2-json.zip", GeoPolygon.PipAlgorithm.JDK);
         _task(collection, GeoPolygon.PipAlgorithm.JDK, GeoDistrictLevel.CITY);
     }
 
@@ -193,7 +193,7 @@ public class GeoUtilsTest_Perf {
     //    @Test
     public void containsLevel2_gpath_2() throws Exception {
         GeoDistrictBoundariesCollection collection = GeoUtils.buildGeoDistrictBoundariesCollection(
-                "src/test/resources/data/level/boundaries-level-2-json.zip", GeoPolygon.PipAlgorithm.JDK_GENERAL_PATH, null);
+                "src/test/resources/data/level/boundaries-level-2-json.zip", GeoPolygon.PipAlgorithm.JDK_GENERAL_PATH);
         _task(collection, GeoPolygon.PipAlgorithm.JDK_GENERAL_PATH, GeoDistrictLevel.CITY);
     }
 
@@ -207,7 +207,7 @@ public class GeoUtilsTest_Perf {
     @Test
     public void containsLevel2_sromku_2() throws Exception {
         GeoDistrictBoundariesCollection collection = GeoUtils.buildGeoDistrictBoundariesCollection(
-                "src/test/resources/data/level/boundaries-level-2-json.zip", GeoPolygon.PipAlgorithm.SROMKU, null);
+                "src/test/resources/data/level/boundaries-level-2-json.zip", GeoPolygon.PipAlgorithm.SROMKU);
         _task(collection, GeoPolygon.PipAlgorithm.SROMKU, GeoDistrictLevel.CITY);
     }
 

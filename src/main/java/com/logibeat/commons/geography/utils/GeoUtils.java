@@ -22,7 +22,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by alex on 17/02/2017.
@@ -76,10 +75,6 @@ public class GeoUtils {
     }
 
     public static GeoDistrictBoundariesCollection buildGeoDistrictBoundariesCollection(String zipFilename, GeoPolygon.PipAlgorithm pipAlgorithm) throws IOException {
-        return buildGeoDistrictBoundariesCollection(zipFilename, pipAlgorithm, buildGeoDistrictCollection());
-    }
-
-    public static GeoDistrictBoundariesCollection buildGeoDistrictBoundariesCollection(String zipFilename, GeoPolygon.PipAlgorithm pipAlgorithm, GeoDistrictCollection prebuiltTreeForOptimizing) throws IOException {
         File zipFile = new File(zipFilename);
         logger.debug("build from zip file: {}", zipFile.getCanonicalPath());
         ZipArchiveInputStream zais = new ZipArchiveInputStream(new FileInputStream(zipFile));
@@ -106,9 +101,11 @@ public class GeoUtils {
         }
         GeoDistrictBoundariesCollection geoDistrictBoundariesCollection = new GeoDistrictBoundariesCollection();
         geoDistrictBoundariesCollection.setGeoDistrictBoundariesArray(list);
+        /*
         if (prebuiltTreeForOptimizing != null) { // set optimized way if ok
             geoDistrictBoundariesCollection.optimize(prebuiltTreeForOptimizing);
         }
+        */
         return geoDistrictBoundariesCollection;
     }
 

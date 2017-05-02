@@ -34,3 +34,7 @@ local.properties
 *.DS_Store
 # Thumbnails
 ._*
+/src/test/resources/data/level/boundaries-level-2-json/
+/src/test/resources/data/level/boundaries-level-3-json/
+/src/test/resources/html/
+/src/test/resources/data/level/temp*.zip

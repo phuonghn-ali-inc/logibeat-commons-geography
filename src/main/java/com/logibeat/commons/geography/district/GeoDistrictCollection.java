@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by alex on 09/03/2017.
@@ -28,10 +29,13 @@ public class GeoDistrictCollection {
     private GeoDistrict _byAdcode(String adcode, boolean clone) {
         loadMap();
         GeoDistrict geoDistrict = geoDistrictMap.get(adcode);
-        return (clone && geoDistrict != null)
-                // ? (GeoDistrict) (BeanUtils.cloneBean(geoDistrict)) // java.lang.NoClassDefFoundError: org/apache/commons/logging/LogFactory
+        GeoDistrict result = (clone && geoDistrict != null)
                 ? ObjectUtils.clone(geoDistrict)
                 : geoDistrict;
+        if (result == null) {
+            logger.debug("GeoDistrict is null.");
+        }
+        return result;
     }
 
     private synchronized void loadMap() {
@@ -62,15 +66,12 @@ public class GeoDistrictCollection {
         return (geoDistrict == null) ? null : geoDistrict.getMergerShortName();
     }
 
-    public Map<String, String> tree() {
-        Map<String, String> map = new HashMap<>();
-        geoDistrictArray.forEach(geoDistrict -> map.put(geoDistrict.getAdcode(), geoDistrict.getParentAdcode()));
-        return Collections.unmodifiableMap(map);
+    public List<String> allAdcode() {
+        return allAdcode(null);
     }
 
-    public List<String> all() {
-        List<String> list = new ArrayList<>();
-        geoDistrictArray.forEach(geoDistrict -> list.add(geoDistrict.getAdcode()));
+    public List<String> allAdcode(GeoDistrictLevel level) {
+        List<String> list = geoDistrictArray.stream().filter(geoDistrict -> level == null || geoDistrict.getLevelInt() == level.getValue()).map(GeoDistrict::getAdcode).collect(Collectors.toList());
         return Collections.unmodifiableList(list);
     }
 }

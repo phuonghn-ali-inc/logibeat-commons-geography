@@ -9,10 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * bounadaries of a district consist of one or more <code>GeoPolygon</code>
@@ -27,6 +24,12 @@ public class GeoDistrictBoundariesCollection {
     private Logger logger = LoggerFactory.getLogger(GeoDistrictBoundariesCollection.class);
 
     private boolean optimizedWay = false;
+
+    public List<String> allAdcode() {
+        List<String> list = new ArrayList<>();
+        geoDistrictBoundariesArray.forEach(geoDistrictBoundaries -> list.add(geoDistrictBoundaries.getAdcode()));
+        return Collections.unmodifiableList(list);
+    }
 
     /**
      * @param x
