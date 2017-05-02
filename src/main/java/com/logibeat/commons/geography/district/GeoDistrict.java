@@ -1,7 +1,5 @@
 package com.logibeat.commons.geography.district;
 
-import org.apache.commons.beanutils.BeanUtils;
-
 /**
  * Created by alex on 09/03/2017.
  */
