@@ -16,7 +16,7 @@ public class GeoDistrictCollection {
 
     Map<String, GeoDistrict> geoDistrictMap;
     
-    Map<String, GeoDistrict> geoNameDistrictMap;
+    Map<String, GeoDistrict> parseAdcodeMap;
     
     private static final Integer LEVEL = 2; 
 
@@ -51,14 +51,14 @@ public class GeoDistrictCollection {
     }
     
     private synchronized void loadNameMap() {
-        if (geoNameDistrictMap != null) {
+        if (parseAdcodeMap != null) {
             return;
         }
-        geoNameDistrictMap = new HashMap<>();
+        parseAdcodeMap = new HashMap<>();
         geoDistrictArray.forEach(geoDistrict -> {
-        	geoNameDistrictMap.put(geoDistrict.getMergerName(), geoDistrict);
+        	parseAdcodeMap.put(geoDistrict.getMergerName(), geoDistrict);
         	if(LEVEL==geoDistrict.getLevelInt()){
-        		geoNameDistrictMap.put(geoDistrict.getName(), geoDistrict);
+        		parseAdcodeMap.put(geoDistrict.getName(), geoDistrict);
         	}
         	
         });
@@ -66,7 +66,7 @@ public class GeoDistrictCollection {
     
     public String parseAdcodeFromMergerName(String address){
     	loadNameMap();
-    	GeoDistrict geoDistrict = geoNameDistrictMap.get(address);
+    	GeoDistrict geoDistrict = parseAdcodeMap.get(address);
     	return (geoDistrict == null) ? null : geoDistrict.getAdcode();
     }
     
