@@ -150,4 +150,13 @@ public class GeoUtilsTest {
                 : (GeoDistrictLevel.DISTRICT.equals(level) ? adcode3 : "xxxxxx");
         Assert.assertEquals(adcode, collection.whichContains(x, y));
     }
+    
+    @Test
+    public void testBuildName() throws Exception {
+        GeoDistrictCollection collection = GeoUtils.buildGeoDistrictCollection();
+        Assert.assertNotNull(collection);
+        Assert.assertEquals("340311", collection.parseAdcodeFromMergerName("安徽省,蚌埠市,淮上区"));
+        Assert.assertEquals("131100", collection.parseAdcodeFromMergerName("衡水市"));
+        Assert.assertEquals("131100", collection.parseAdcodeFromMergerName("河北省,衡水市"));  
+    }
 }

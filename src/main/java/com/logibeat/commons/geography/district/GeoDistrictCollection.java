@@ -15,6 +15,10 @@ public class GeoDistrictCollection {
     List<GeoDistrict> geoDistrictArray;
 
     Map<String, GeoDistrict> geoDistrictMap;
+    
+    Map<String, GeoDistrict> geoNameDistrictMap;
+    
+    private static final Integer LEVEL = 2; 
 
     private Logger logger = LoggerFactory.getLogger(GeoDistrictCollection.class);
 
@@ -45,7 +49,27 @@ public class GeoDistrictCollection {
         geoDistrictMap = new HashMap<>();
         geoDistrictArray.forEach(geoDistrict -> geoDistrictMap.put(geoDistrict.getAdcode(), geoDistrict));
     }
-
+    
+    private synchronized void loadNameMap() {
+        if (geoNameDistrictMap != null) {
+            return;
+        }
+        geoNameDistrictMap = new HashMap<>();
+        geoDistrictArray.forEach(geoDistrict -> {
+        	geoNameDistrictMap.put(geoDistrict.getMergerName(), geoDistrict);
+        	if(LEVEL==geoDistrict.getLevelInt()){
+        		geoNameDistrictMap.put(geoDistrict.getName(), geoDistrict);
+        	}
+        	
+        });
+    }
+    
+    public String parseAdcodeFromMergerName(String address){
+    	loadNameMap();
+    	GeoDistrict geoDistrict = geoNameDistrictMap.get(address);
+    	return (geoDistrict == null) ? null : geoDistrict.getAdcode();
+    }
+    
     public String getNameByAdcode(String adcode) {
         GeoDistrict geoDistrict = _byAdcode(adcode, false);
         return (geoDistrict == null) ? null : geoDistrict.getName();
