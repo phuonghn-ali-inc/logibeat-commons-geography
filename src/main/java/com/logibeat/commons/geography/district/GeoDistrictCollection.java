@@ -50,7 +50,7 @@ public class GeoDistrictCollection {
         geoDistrictArray.forEach(geoDistrict -> geoDistrictMap.put(geoDistrict.getAdcode(), geoDistrict));
     }
     
-    private synchronized void loadNameMap() {
+    private synchronized void loadParseAdcodeMap() {
         if (parseAdcodeMap != null) {
             return;
         }
@@ -65,7 +65,7 @@ public class GeoDistrictCollection {
     }
     
     public String parseAdcodeFromMergerName(String address){
-    	loadNameMap();
+    	loadParseAdcodeMap();
     	GeoDistrict geoDistrict = parseAdcodeMap.get(address);
     	return (geoDistrict == null) ? null : geoDistrict.getAdcode();
     }
