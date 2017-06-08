@@ -18,8 +18,6 @@ public class GeoDistrictCollection {
     
     Map<String, GeoDistrict> parseAdcodeMap;
     
-    private static final Integer LEVEL = 2; 
-
     private Logger logger = LoggerFactory.getLogger(GeoDistrictCollection.class);
 
     public GeoDistrictCollection(List<GeoDistrict> geoDistrictArray) {
@@ -57,7 +55,7 @@ public class GeoDistrictCollection {
         parseAdcodeMap = new HashMap<>();
         geoDistrictArray.forEach(geoDistrict -> {
         	parseAdcodeMap.put(geoDistrict.getMergerName(), geoDistrict);
-        	if(LEVEL==geoDistrict.getLevelInt()){
+        	if(GeoDistrictLevel.CITY.getValue()==geoDistrict.getLevelInt()){
         		parseAdcodeMap.put(geoDistrict.getName(), geoDistrict);
         	}
         	
