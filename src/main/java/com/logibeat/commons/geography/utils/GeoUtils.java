@@ -6,6 +6,7 @@ import com.logibeat.commons.geography.GeoPoint;
 import com.logibeat.commons.geography.GeoShape;
 import com.logibeat.commons.geography.boundary.GeoDistrictBoundaries;
 import com.logibeat.commons.geography.boundary.GeoDistrictBoundariesCollection;
+import com.logibeat.commons.geography.boundary.GeoDistrictBoundariesHash;
 import com.logibeat.commons.geography.district.GeoDistrict;
 import com.logibeat.commons.geography.district.GeoDistrictCollection;
 import com.logibeat.commons.geography.polygon.*;
@@ -147,5 +148,12 @@ public class GeoUtils {
             union.setMinY(Double.isInfinite(union.getMinY()) ? geoBounds.getMinY() : Math.min(union.getMinY(), geoBounds.getMinY()));
         }
         return union;
+    }
+    
+    public static GeoDistrictBoundariesHash buildGeoDistrictBoundariesHash(String zipFilename) throws IOException {
+    	GeoDistrictBoundariesHash geoHash = new GeoDistrictBoundariesHash();
+    	GeoDistrictBoundariesCollection collection = buildGeoDistrictBoundariesCollection(zipFilename, GeoPolygon.PipAlgorithm.JDK);
+    	geoHash.setGeoDistrictBoundariesHash(collection);
+        return geoHash;
     }
 }

@@ -90,7 +90,12 @@ public class GeoDistrictBoundariesCollection {
         this.geoDistrictBoundariesArray = geoDistrictBoundariesArray;
     }
 
-    public synchronized boolean optimize(GeoDistrictCollection tree) {
+    
+    public List<GeoDistrictBoundaries> getGeoDistrictBoundariesArray() {
+		return geoDistrictBoundariesArray;
+	}
+
+	public synchronized boolean optimize(GeoDistrictCollection tree) {
         try {
             _optimize(tree);
             // set flag
