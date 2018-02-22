@@ -42,7 +42,7 @@ public class GeoDistrictBoundariesHash {
 		geoDistrictBoundariesHash = new HashMap<>();
 		for (GeoDistrictBoundaries geoDistrictBoundaries : geoList) {
 			GeoBounds geoBounds = geoDistrictBoundaries.getGeoBounds();
-			List<String> geohashes = GeoHashUtil.getGeohash(geoBounds, geoDistrictBoundaries.getAdcode());
+			List<String> geohashes = GeoHashUtil.getGeohash(geoBounds);
 			for (String geohash : geohashes) {
 				List<GeoDistrictBoundaries> list = geoDistrictBoundariesHash.get(geohash);
 				if (list == null) {

@@ -217,7 +217,7 @@ public class GeoHashUtil {
     }
 
 	//TODO 这个方法不行
-	public static List<String> getGeohash(GeoBounds geoBounds,String adcode) {
+	public static List<String> getGeohash(GeoBounds geoBounds) {
 		List<String> geohashes = new ArrayList<>();;
 		String minGeohash = encode(geoBounds.getMinX(), geoBounds.getMinY());
 		String maxGeohash = encode(geoBounds.getMaxX(), geoBounds.getMaxY());
@@ -231,20 +231,14 @@ public class GeoHashUtil {
 		String minlng =minBinary[1];
 		String maxlat = maxBinary[0];
 		String maxlng =maxBinary[1];
-		int i = 0;
-		System.err.println("adcode:"+adcode+"minGeohash:"+minGeohash+"--------------"+"maxGeohash:"+maxGeohash);
-		System.err.println("minlat:"+minlat+"--------------"+"maxlat:"+maxlat);
-		System.err.println("minlng:"+minlng+"--------------"+"maxlng:"+maxlng);
 		if(minlat.equals(maxlat)){
 	        do {
 	        	String encodeBinary = encodeBinary(minlat,minlng);
-	        	System.err.println("上面"+i+"---------------"+"hash:"+ encodeBinary);
 	        	if( !geohashes.contains(encodeBinary)){
 	        	  geohashes.add(encodeBinary); 
 	        	}
 	        	
 	        	minlng = addBinary(minlng,"1");
-	        	i++;
 	           }while(!maxlng.equals(minlng)); 
 	 
 		}else{
@@ -254,8 +248,6 @@ public class GeoHashUtil {
 	        	if( !geohashes.contains(encodeBinary)){
 	        	  geohashes.add(encodeBinary); 
 	        	}
-	        	i++;
-	        	System.err.println("下面"+i+"--------------"+"hash:"+ encodeBinary);
 	        	if(maxlng.equals(minlng)){
 	        		minlat = addBinary(minlat,"1");
 	        		minlng = orgMinlnt;
