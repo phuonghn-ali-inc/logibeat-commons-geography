@@ -9,7 +9,7 @@ import com.logibeat.commons.geography.polygon.GeoBounds;
 
 public class GeoHashUtil {
 
-	private static int numbits = 3 * 5;
+	private static int numbits = 2 * 5;
 	final static char[] digits = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
 			'j', 'k', 'm', 'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
 
@@ -246,11 +246,7 @@ public class GeoHashUtil {
 	        	minlng = addBinary(minlng,"1");
 	        	i++;
 	           }while(!maxlng.equals(minlng)); 
-	        
-	        String encodeBinary = encodeBinary(maxlat,minlng);
-	    	if( !geohashes.contains(encodeBinary)){
-	    	  geohashes.add(encodeBinary); 
-	    	} 
+	 
 		}else{
 			String orgMinlnt = minlng;
 			do {
@@ -268,6 +264,11 @@ public class GeoHashUtil {
 	        	}
 	           }while(!maxlat.equals(minlat)); 
 		}
+	       
+        String encodeBinary = encodeBinary(maxlat,maxlng);
+    	if( !geohashes.contains(encodeBinary)){
+    	  geohashes.add(encodeBinary); 
+    	} 
 		return geohashes;
 	}
 	

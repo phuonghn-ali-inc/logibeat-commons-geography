@@ -12,6 +12,8 @@ import com.logibeat.commons.geography.utils.GeoUtils;
 
 public class GeoDistrictBoundariesHash {
 	 Map<String,List<GeoDistrictBoundaries>> geoDistrictBoundariesHash;
+	 
+	 GeoDistrictBoundariesCollection geoDistrictBoundariesCollection;
 
 	public Map<String, List<GeoDistrictBoundaries>> getGeoDistrictBoundariesHash() {
 		return geoDistrictBoundariesHash;
@@ -20,6 +22,9 @@ public class GeoDistrictBoundariesHash {
 	public  String getAdcode(double x, double y) {
 		String geoHash = GeoHashUtil.encode(x, y);
 		List<GeoDistrictBoundaries> list = geoDistrictBoundariesHash.get(geoHash);
+		if(list == null){
+			return geoDistrictBoundariesCollection.whichContains(x,y);
+		}
 		if(list.size() == 1){
 			return list.get(0).getAdcode();
 		}
@@ -33,6 +38,7 @@ public class GeoDistrictBoundariesHash {
 
 	
 	public Map<String, List<GeoDistrictBoundaries>> setGeoDistrictBoundariesHash(GeoDistrictBoundariesCollection geoDistrictBoundariesCollection) {
+		this.geoDistrictBoundariesCollection = geoDistrictBoundariesCollection;
 		List<GeoDistrictBoundaries> geoList = geoDistrictBoundariesCollection.getGeoDistrictBoundariesArray();
 		geoDistrictBoundariesHash = new HashMap<>();
 		for (GeoDistrictBoundaries geoDistrictBoundaries : geoList) {
@@ -59,10 +65,12 @@ public class GeoDistrictBoundariesHash {
 		GeoDistrictBoundariesHash geoDistrictBoundariesHash = GeoUtils.buildGeoDistrictBoundariesHash(
 	                "src/test/resources/data/level/boundaries-level-2-json.zip");
 //	                "src/test/resources/data/level/test.zip");
-	        String adcode = geoDistrictBoundariesHash.getAdcode(117.209288, 40.082196);
+	        String adcode = geoDistrictBoundariesHash.getAdcode(118.616411, 29.269244);
+	        String adcode2 = geoDistrictBoundariesHash.getAdcode(82.348955,44.690051);
 	        long t2 = System.currentTimeMillis();
 	        System.err.println(t2-t1);
 	        System.err.println(adcode);
+	        System.err.println(adcode2);
 	      
 	}
 }
