@@ -34,12 +34,12 @@ public class GeoDistrictBoundariesHash {
 	
 	public Map<String, List<GeoDistrictBoundaries>> setGeoDistrictBoundariesHash(GeoDistrictBoundariesCollection geoDistrictBoundariesCollection) {
 		List<GeoDistrictBoundaries> geoList = geoDistrictBoundariesCollection.getGeoDistrictBoundariesArray();
+		geoDistrictBoundariesHash = new HashMap<>();
 		for (GeoDistrictBoundaries geoDistrictBoundaries : geoList) {
 			GeoBounds geoBounds = geoDistrictBoundaries.getGeoBounds();
-			List<String>  geohashes= GeoHashUtil.getGeohash(geoBounds);
+			List<String>  geohashes= GeoHashUtil.getGeohash(geoBounds,geoDistrictBoundaries.getAdcode());
 			for (String geohash : geohashes) {
-				geoDistrictBoundariesHash =  new HashMap<>();
-				List<GeoDistrictBoundaries> list =geoDistrictBoundariesHash.get(geohash) ;
+				List<GeoDistrictBoundaries> list =geoDistrictBoundariesHash.get(geohash);
 				if(list == null){
 					List<GeoDistrictBoundaries> firstlist = new ArrayList<>() ;
 					firstlist.add(geoDistrictBoundaries);
@@ -47,6 +47,7 @@ public class GeoDistrictBoundariesHash {
 				}
 				if(list != null && !list.contains(geoDistrictBoundaries)){
 				    list.add(geoDistrictBoundaries);
+				    geoDistrictBoundariesHash.put(geohash, list);
 				}
 			}
 		}
@@ -54,9 +55,13 @@ public class GeoDistrictBoundariesHash {
 	}
 	
 	public static void main(String[] args) throws Exception {
+	    long t1 = System.currentTimeMillis();
 		GeoDistrictBoundariesHash geoDistrictBoundariesHash = GeoUtils.buildGeoDistrictBoundariesHash(
 	                "src/test/resources/data/level/boundaries-level-2-json.zip");
-	        String adcode = geoDistrictBoundariesHash.getAdcode(118.616411, 29.269244);
+//	                "src/test/resources/data/level/test.zip");
+	        String adcode = geoDistrictBoundariesHash.getAdcode(117.209288, 40.082196);
+	        long t2 = System.currentTimeMillis();
+	        System.err.println(t2-t1);
 	        System.err.println(adcode);
 	      
 	}
