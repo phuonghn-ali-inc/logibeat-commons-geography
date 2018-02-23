@@ -38,8 +38,10 @@ public class GeoDistrictBoundariesHash {
 	public String getAdcode(double x, double y) {
 		String geoHash = GeoHashUtil.encode(x, y);
 		List<GeoDistrictBoundaries> list = geoDistrictBoundariesHash.get(geoHash);
-		
-		if (list != null && list.size() == 1) {
+		if (list == null) {
+			return geoDistrictBoundariesCollection.whichContains(x, y);
+		}
+		if (list.size() == 1) {
 			return list.get(0).getAdcode();
 		}
 		for (GeoDistrictBoundaries geoDistrictBoundaries : list) {
