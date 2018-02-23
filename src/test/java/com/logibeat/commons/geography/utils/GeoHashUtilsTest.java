@@ -18,9 +18,7 @@ import org.slf4j.LoggerFactory;
 
 import com.logibeat.commons.geography.boundary.GeoDistrictBoundariesHash;
 
-/**
- * Created by alex on 17/02/2017.
- */
+
 public class GeoHashUtilsTest {
 
     public static final int TIMES_IN_TASK = 1 * 1000;
@@ -86,16 +84,8 @@ public class GeoHashUtilsTest {
 
 
 	private static void test(double lat, double lng,GeoDistrictBoundariesHash geoDistrictBoundariesHash) throws IOException {
-//		long t2 = System.currentTimeMillis();
 		String adcode = geoDistrictBoundariesHash.getAdcode(lat, lng);
 		logger.info("adcode : {} ", adcode);
-//		long t3 = System.currentTimeMillis();
-//		System.err.println("adcode: "+ (t3 - t2));
-//		String old = geoDistrictBoundariesHash.getGeoDistrictBoundariesCollection().whichContains(lat, lng);
-//		long t4 = System.currentTimeMillis();
-//		System.err.println("old: "+ (t4 - t3));
-//		System.err.println(adcode+"-----------"+old);
-//		Assert.assertEquals(adcode, old);
 	}
 	
 	  
@@ -117,6 +107,7 @@ public class GeoHashUtilsTest {
 			GeoDistrictBoundariesHash geoDistrictBoundariesHash = GeoUtils.buildGeoDistrictBoundariesHash("src/test/resources/data/level/boundaries-level-2-json.zip");
 			// "src/test/resources/data/level/test.zip");
 			long t2 = System.currentTimeMillis();
+			logger.info("init : {} ", t2 - t1);
 			_task(geoDistrictBoundariesHash);
 	  }
    
